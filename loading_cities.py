@@ -6,7 +6,8 @@ conn, cur = connect_to_db()
 
 try:
     # Create table if not exists (moved outside the loop)
-    cur.execute("""
+    cur.execute(
+        """
         CREATE TABLE IF NOT EXISTS cities (
             insee_code VARCHAR(10),
             city_code VARCHAR(100),
@@ -19,27 +20,38 @@ try:
             region_name VARCHAR(100),
             region_geojson_name VARCHAR(100)
         )
-    """)
+    """
+    )
 
     # Lecture du fichier JSON
-    with open("cities.json", 'r') as fichier:
+    with open("cities.json", "r") as fichier:
         data = json.load(fichier)
-    
+
     for city in data:
-        latitude = float(city['latitude']) if city['latitude'] else None
-        longitude = float(city['longitude']) if city['longitude'] else None
-        cur.execute("""
+        latitude = float(city["latitude"]) if city["latitude"] else None
+        longitude = float(city["longitude"]) if city["longitude"] else None
+        cur.execute(
+            """
             INSERT INTO cities (
                 insee_code, city_code, zip_code, label,
                 latitude, longitude, department_name,
                 department_number, region_name, region_geojson_name
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """, (
-            city['insee_code'], city['city_code'], city['zip_code'], city['label'],
-            latitude, longitude,
-            city['department_name'], city['department_number'], city['region_name'], city['region_geojson_name']
-        ))
-            
+        """,
+            (
+                city["insee_code"],
+                city["city_code"],
+                city["zip_code"],
+                city["label"],
+                latitude,
+                longitude,
+                city["department_name"],
+                city["department_number"],
+                city["region_name"],
+                city["region_geojson_name"],
+            ),
+        )
+
     # Commit the transaction
     conn.commit()
     print("Data cities transfer to PostgreSQL succeeded!")
