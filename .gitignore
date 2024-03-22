@@ -1,4 +1,4 @@
-*.json
+cities.json
 __pycache__
 config.env
 config.py

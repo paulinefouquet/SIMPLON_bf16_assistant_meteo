@@ -17,14 +17,14 @@ def connect_to_db():
         print(f"Error connecting data into PostgreSQL: {e}")
 
 
-def fetch_perimeter_dep(cur, dep_name):
+def fetch_perimeter_dep(cur, dep_num):
     cur.execute(
         """
         SELECT DISTINCT latitude, longitude, label
         FROM cities
-        WHERE department_name = %s;
+        WHERE department_number = %s;
     """,
-        (dep_name,),
+        (dep_num,),
     )
     return cur.fetchall()
 
