@@ -5,9 +5,9 @@ from db import (
     insert_data,
     delete_old_data_30h,
 )
-from meteo import city_meteo_forecast
+from get_meteo import city_meteo_forecast
 
-DEPARTMENT_NUMBER = "09"
+DEPARTMENT_NUMBER = "34"
 
 conn, cur = connect_to_db()
 
