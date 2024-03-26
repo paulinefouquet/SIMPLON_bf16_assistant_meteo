@@ -9,7 +9,7 @@ PORT_API = 8000  # port utiliser par uvicorn
 
 app = FastAPI()
 
-origins = ["*"]
+origins = ["http://localhost:8001"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,7 +27,6 @@ async def forecast(city: str, date: str, hour: int = None):
         audio_path = f"/audio/{audio_file}"
         return {
             "audio_file": audio_path,
-            "audio_link": f"<a href='{audio_file}'>Download Audio</a>",
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
