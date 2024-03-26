@@ -7,6 +7,8 @@ from db import (
 )
 from get_meteo import city_meteo_forecast
 
+from tqdm import tqdm
+
 DEPARTMENT_NUMBER = "34"
 
 conn, cur = connect_to_db()
@@ -15,7 +17,7 @@ cities = fetch_perimeter_dep(cur, DEPARTMENT_NUMBER)
 
 create_table(cur)
 
-for city in cities:
+for city in tqdm(cities):
 
     latitude, longitude, label = city
     data_meteo = city_meteo_forecast(latitude, longitude)

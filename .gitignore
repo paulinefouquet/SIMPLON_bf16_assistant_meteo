@@ -2,3 +2,4 @@ cities.json
 __pycache__
 config.py
 *.mp3
+.pytest_cache

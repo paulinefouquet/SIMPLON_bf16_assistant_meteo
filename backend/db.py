@@ -1,7 +1,8 @@
 import psycopg2
 
+import sys
+sys.path.append("../")
 from config import DB_NAME, USER, PASSWORD, HOST, PORT
-
 
 def connect_to_db():
     try:
@@ -32,9 +33,9 @@ def fetch_perimeter_dep(cur, dep_num):
 def create_table(cur):
     cur.execute(
         """
-        CREATE TABLE IF NOT EXISTS weather2 (
+        CREATE TABLE IF NOT EXISTS weather (
             dt_ref INT,
-            dt_forecast INT,
+            dt_forecast TIMESTAMP,
             city_label VARCHAR(100),
             latitude FLOAT,
             longitude FLOAT,
@@ -72,8 +73,8 @@ def insert_data(conn, cur, data, city_data, dt_ref):
             try:
                 cur.execute(
                     """
-                    INSERT INTO weather2 (dt_ref, dt_forecast, city_label, latitude, longitude, temperature, humidity, sea_level, wind_speed, wind_gust, wind_direction, weather_icon, weather_desc)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                    INSERT INTO weather (dt_ref, dt_forecast, city_label, latitude, longitude, temperature, humidity, sea_level, wind_speed, wind_gust, wind_direction, weather_icon, weather_desc)
+                    VALUES (%s, TO_TIMESTAMP(%s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                 """,
                     (
                         dt_ref,
@@ -91,9 +92,6 @@ def insert_data(conn, cur, data, city_data, dt_ref):
                         weather_desc,
                     ),
                 )
-
-                print("insertion des données en cours")
-
                 conn.commit()
 
             except psycopg2.IntegrityError:
@@ -109,7 +107,7 @@ def delete_old_data_30h(conn, cur):
     try:
         cur.execute(
             """
-            DELETE FROM weather2
+            DELETE FROM weather
             WHERE EXTRACT(EPOCH FROM NOW()) - dt_ref > 108000;
         """
         )
