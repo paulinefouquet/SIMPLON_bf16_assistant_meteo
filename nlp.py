@@ -110,12 +110,11 @@ def text_to_speech(meteo_text: str, city: str, date: str, hour=None) -> None:
             else:
                 filename = f"audio_{city}_{date}_{hour}.mp3"
 
-            with open(filename, "wb") as audio_file:
+            with open(f"audio/{filename}", "wb") as audio_file:
                 audio_file.write(audio_bytes)
             print(f"Fichier audio généré avec succès : {filename}")
+            return filename
         else:
             print("Aucune donnée audio disponible.")
     else:
         print(f"Erreur lors de la requête : {response.status_code} - {response.text}")
-
-
