@@ -1,9 +1,9 @@
 # meteo
 
 
-## Démarrer d'un serveur front-end sur le port 8888
+## Démarrer d'un serveur front-end sur le port 8001
 
-Exécutez la commande suivante dans le répertoire /frontend  
+Exécutez la commande suivante à la racine du projet
 ```
 python -m http.server 8001
 ```

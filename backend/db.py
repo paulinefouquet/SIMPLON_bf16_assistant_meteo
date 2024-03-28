@@ -1,10 +1,14 @@
 import psycopg2
-
-import sys
-sys.path.append("../")
-from config import DB_NAME, USER, PASSWORD, HOST, PORT
+import os
 
 def connect_to_db():
+    DB_NAME = os.environ.get('DB_NAME')
+    USER = os.environ.get('USER')
+    PASSWORD = os.environ.get('PASSWORD')
+    HOST = os.environ.get('HOST')
+    PORT = os.environ.get('PORT')
+
+    conn = None
     try:
         conn = psycopg2.connect(
             dbname=DB_NAME, user=USER, password=PASSWORD, host=HOST, port=PORT
@@ -14,8 +18,8 @@ def connect_to_db():
         return conn, cur
 
     except Exception as e:
-        conn.rollback()  # Rollback the transaction if an error occurs
         print(f"Error connecting data into PostgreSQL: {e}")
+        return None, None  # Retourne None si la connexion échoue
 
 
 def fetch_perimeter_dep(cur, dep_num):
