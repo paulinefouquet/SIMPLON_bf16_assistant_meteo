@@ -1,26 +1,50 @@
 # meteo
 
+## Prérequis:
+Avoir installé postgres en local, avoir défini un password et démarré le serveur:  
+DB_NAME 'postgres'  
+USER 'postgres'  
+PASSWORD 'pauline'  
+HOST 'localhost'  
+PORT '5432'  
+
+démarrer Docker desktop  
+
 ## Chargement des données de l'API meteoFrance
 
-Toutes les 3H ce service charge les données de forecast de MétéoFrance et supprime les datas anciennes de plus de 30H
+Toutes les 3H ce service charge les données de forecast de MétéoFrance et supprime les datas anciennes de plus de 30H  
 
 ### Démarrage :
 
-Construire une image à partir du backend/Dockerfile
-Executer le container
+Construire une image à partir dans le répertoire backend/  
+```
+docker build -t mateo-back .
+```
+Executer le container  
+```
+docker run mateo-back
+```
 
 ## Microservice meteo -> text et audio
 
-API nlp qui fait appel à edenai
+API qui fait appel à edenai pour générer du texte et un audio
 
-### Obtenir une key
+### Obtenir une Key de EdenAI
+
+https://docs.edenai.co/reference/start-your-ai-journey-with-edenai  
+
+Dans répertoire backnlp, créer un fichier dupliquer le fichier config.py.example et le renommer config.py y modifier la variable avec la clé obtenue auprès de edenai  
+EDENAI_KEY = "Bearer xxxxxxxxxxxxxx....xxxxxxxxxxxxxxxxxxx"
 
 ### Démarrage :
 
-Construire une image à partir du backnlp/Dockerfile
+Construire une image docker dans le répertoire backnlp/
+```
+docker build -t <nom de l'image> .
+```
 Executer le container sur le port 8000
 ```
-drun -p 8000:8000 <nom de l'image générée>
+docker run -p 8000:8000 <nom de l'image>
 ```
 
 ## Démarrer d'un serveur front-end sur le port 8001
