@@ -12,10 +12,10 @@ document.getElementById('forecastForm').addEventListener('submit', function(even
     var requestUrl = apiUrl + '?city=' + encodeURIComponent(city) + '&date=' + encodeURIComponent(date) + '&hour=' + encodeURIComponent(hour);
 
     fetch(requestUrl)
-        .then(response => response.json())
-        .then(data => {
-            var audioFile = "http://127.0.0.1:8001/" + data.audio_file; // Ajoutez l'URL de base de votre serveur
-            document.getElementById("audioPlayer").src = audioFile;
+        .then(response => response.blob())
+        .then(blob => {
+            var audioUrl = URL.createObjectURL(blob); 
+            document.getElementById("audioPlayer").src = audioUrl;
             document.getElementById("audioPlayer").style.display = "block";
         })
         .catch(error => {

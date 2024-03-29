@@ -2,12 +2,8 @@ import requests
 import json
 import base64
 
-
-PORT_API = 8000  # port utiliser par uvicorn
-HOST = 'localhost'
-from backend.db import connect_to_db
 from config import EDENAI_KEY
-
+from db import connect_to_db
 
 # Check if my_key is empty or missing
 if not EDENAI_KEY or EDENAI_KEY == "":
@@ -78,8 +74,6 @@ def generate_text(city: str, date: str, hour=None) -> str:
     response = requests.post(url, json=payload, headers=headers)
 
     result = json.loads(response.text)[provider]
-    print(f"le texte suivant a été généré: {result['generated_text']}")
-
     meteo_text = result["generated_text"]
     return meteo_text
 
@@ -96,20 +90,21 @@ def text_to_speech(meteo_text: str, city: str, date: str, hour=None) -> None:
         "text": meteo_text,
         "fallback_providers": "",
     }
-
+    
+    
     response = requests.post(url, json=payload, headers=headers)
-
+    
     if response.status_code == 200:
         result = response.json()
+        
         audio_data = result.get('google', {}).get('audio')
         if audio_data:
             audio_bytes = base64.b64decode(audio_data)
-
             if hour is None:
                 filename = f"audio_{city}_{date}.mp3"
             else:
                 filename = f"audio_{city}_{date}_{hour}.mp3"
-
+            print(f'filename{filename}')
             with open(f"audio/{filename}", "wb") as audio_file:
                 audio_file.write(audio_bytes)
             print(f"Fichier audio généré avec succès : {filename}")
