@@ -5,6 +5,7 @@ from db import (
     insert_data,
     delete_old_data_30h,
 )
+from loading_cities import load_cities
 from get_meteo import city_meteo_forecast
 
 from tqdm import tqdm
@@ -12,6 +13,14 @@ from tqdm import tqdm
 DEPARTMENT_NUMBER = "34"
 
 conn, cur = connect_to_db()
+
+# Vérifier si la table cities existe
+cur.execute("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'cities')")
+table_exists = cur.fetchone()[0]
+
+if not table_exists:
+    print("Table 'cities' does not exist. Loading cities data...")
+    load_cities()  # Si la table n'existe pas, charger les données des villes
 
 cities = fetch_perimeter_dep(cur, DEPARTMENT_NUMBER)
 

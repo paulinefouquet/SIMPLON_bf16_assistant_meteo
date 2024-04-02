@@ -14,11 +14,12 @@ COPY . .
 ENV DB_NAME 'postgres'
 ENV USER 'postgres'
 ENV PASSWORD 'pauline'
-ENV HOST 'host.docker.internal'
+#ENV HOST 'host.docker.internal'
+ENV DB_HOST 'pauline-azure-postgres.abhpf2hkb4hxb3b5.westeurope.azurecontainer.io'
 ENV PORT '5432'
 
 # Installer les dépendances de l'application
 RUN pip install psycopg2-binary meteofrance_api tqdm schedule
 
 # Définir la commande à exécuter lors du démarrage du conteneur
-CMD ["python", "load_3h.py"]
+CMD ["python", "main.py"]

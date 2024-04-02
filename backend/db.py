@@ -5,7 +5,7 @@ def connect_to_db():
     DB_NAME = os.environ.get('DB_NAME')
     USER = os.environ.get('USER')
     PASSWORD = os.environ.get('PASSWORD')
-    HOST = os.environ.get('HOST')
+    HOST = os.environ.get('DB_HOST')
     PORT = os.environ.get('PORT')
 
     conn = None

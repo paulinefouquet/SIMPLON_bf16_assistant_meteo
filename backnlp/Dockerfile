@@ -14,7 +14,8 @@ COPY . .
 ENV DB_NAME 'postgres'
 ENV USER 'postgres'
 ENV PASSWORD 'pauline'
-ENV HOST 'host.docker.internal'
+# ENV HOST 'host.docker.internal'
+ENV DB_HOST 'pauline-azure-postgres.abhpf2hkb4hxb3b5.westeurope.azurecontainer.io'
 ENV PORT '5432'
 
 # Installer les dépendances de l'application

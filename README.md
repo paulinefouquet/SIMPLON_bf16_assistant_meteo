@@ -1,5 +1,29 @@
 # meteo
 
+Executer le container postgres sur Azure
+
+depuis le repertoire postgres/  
+```
+dbt my-postgres-image .
+```
+
+depuis le repertoire backend/  
+```
+dbt load-data-azure .
+```
+
+depuis le repertoire backnlp/  
+```
+dbt image-nlp-azure .
+```
+
+```
+docker tag load-data-azure apimeteonlp.azurecr.io/pauline-load-data-azure
+docker push apimeteonlp.azurecr.io/pauline-load-data-azure
+docker tag image-nlp-azure apimeteonlp.azurecr.io/pauline-api-nlp-azure
+docker push apimeteonlp.azurecr.io/pauline-api-nlp-azure
+```
+
 ## Prérequis:
 Avoir installé postgres en local, avoir défini un password et démarré le serveur:  
 DB_NAME 'postgres'  
