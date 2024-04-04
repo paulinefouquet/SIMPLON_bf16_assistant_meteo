@@ -1,6 +1,6 @@
 # meteo
 
-Executer le container postgres sur Azure
+Construction des images dockers
 
 depuis le repertoire postgres/  
 ```
@@ -17,7 +17,10 @@ depuis le repertoire backnlp/
 dbt image-nlp-azure .
 ```
 
+Push des images sur un regsitre de conteneur azure (ici apimeteonlp)
 ```
+docker tag paulinepostgres apimeteonlp.azurecr.io/paulinepostgres
+docker push apimeteonlp.azurecr.io/paulinepostgres
 docker tag load-data-azure apimeteonlp.azurecr.io/pauline-load-data-azure
 docker push apimeteonlp.azurecr.io/pauline-load-data-azure
 docker tag image-nlp-azure apimeteonlp.azurecr.io/pauline-api-nlp-azure

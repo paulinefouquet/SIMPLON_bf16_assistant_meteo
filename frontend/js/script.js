@@ -8,7 +8,7 @@ document.getElementById('forecastForm').addEventListener('submit', function(even
     var date = formData.get('date');
     var hour = formData.get('hour');
 
-    var apiUrl = 'http://127.0.0.1:8000/forecast';
+    var apiUrl = 'http://pauline-api-meteo-nlp.eda3d0gde0hthqgp.westeurope.azurecontainer.io:8000/forecast';
     var requestUrl = apiUrl + '?city=' + encodeURIComponent(city) + '&date=' + encodeURIComponent(date) + '&hour=' + encodeURIComponent(hour);
 
     fetch(requestUrl)
