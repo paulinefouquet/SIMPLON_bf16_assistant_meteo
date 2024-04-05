@@ -4,19 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Météhérauologique</title>
+    <link rel="icon" href="https://fav.farm/👓" />
+    <title>Met-hérault-ologie</title>
 
 </head>
 <body>
-    <h1>Sélectionnez une ville de l'Hérault, une date et une heure pour obtenir le forecast météo</h1>
+    <h1>Bulletin Météo Audio Hérault</h1>
     <form id="forecastForm">
         <label for="city">Ville:</label>
-        <select id="city" name="city">
-            <option value="Montpellier">Montpellier</option>
-            <option value="Jacou">Jacou</option>
-            <option value="Gignac">Gignac</option>
-            <!-- Ajoutez d'autres options pour les 342 villes de l'Hérault -->
-        </select><br><br>
+        <input type="text" id="city" name="city" placeholder="Choisis ta ville">
+        <div class="suggestions"></div><br><br>
 
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+72 hours')); ?>"><br><br>
@@ -24,7 +21,7 @@
         <label for="hour">Heure:</label>
         <input type="number" id="hour" name="hour" min="0" max="23"><br><br>
 
-        <button type="submit">Obtenir Forecast</button>
+        <button type="submit">Obtenir un Audio Forecast</button>
     </form>
 
     <audio id="audioPlayer" controls style="display: none;"></audio>

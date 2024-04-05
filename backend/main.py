@@ -15,7 +15,9 @@ DEPARTMENT_NUMBER = "34"
 conn, cur = connect_to_db()
 
 # Vérifier si la table cities existe
-cur.execute("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'cities')")
+cur.execute(
+    "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'cities')"
+)
 table_exists = cur.fetchone()[0]
 
 if not table_exists:

@@ -2,6 +2,7 @@ import json
 
 from db import connect_to_db
 
+
 def load_cities():
     conn, cur = connect_to_db()
     try:

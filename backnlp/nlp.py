@@ -14,7 +14,7 @@ if not EDENAI_KEY or EDENAI_KEY == "":
 headers = {"Authorization": EDENAI_KEY}
 
 
-#récupérer les données de la db:
+# récupérer les données de la db:
 def fetch_forecast_for_city(city, date, hour=None):
     conn, cur = connect_to_db()
 
@@ -55,6 +55,7 @@ def fetch_forecast_for_city(city, date, hour=None):
         )
     return result.strip()
 
+
 def generate_text(city: str, date: str, hour=None) -> str:
     meteo_data = fetch_forecast_for_city(city, date, hour=None)
 
@@ -77,6 +78,7 @@ def generate_text(city: str, date: str, hour=None) -> str:
     meteo_text = result["generated_text"]
     return meteo_text
 
+
 def text_to_speech(meteo_text: str, city: str, date: str, hour=None) -> None:
 
     url = "https://api.edenai.run/v2/audio/text_to_speech"
@@ -90,21 +92,20 @@ def text_to_speech(meteo_text: str, city: str, date: str, hour=None) -> None:
         "text": meteo_text,
         "fallback_providers": "",
     }
-    
-    
+
     response = requests.post(url, json=payload, headers=headers)
-    
+
     if response.status_code == 200:
         result = response.json()
-        
-        audio_data = result.get('google', {}).get('audio')
+
+        audio_data = result.get("google", {}).get("audio")
         if audio_data:
             audio_bytes = base64.b64decode(audio_data)
             if hour is None:
                 filename = f"audio_{city}_{date}.mp3"
             else:
                 filename = f"audio_{city}_{date}_{hour}.mp3"
-            print(f'filename: {filename}')
+            print(f"filename: {filename}")
             with open(f"audio/{filename}", "wb") as audio_file:
                 audio_file.write(audio_bytes)
             print(f"Fichier audio généré avec succès : {filename}")

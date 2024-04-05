@@ -1,23 +1,31 @@
 # meteo
 
-Construction des images dockers
+Construction des 4 images dockers  
 
 depuis le repertoire postgres/  
 ```
-dbt my-postgres-image .
+docker build -t my-postgres-image .
 ```
 
 depuis le repertoire backend/  
 ```
-dbt load-data-azure .
+docker build -t load-data-azure .
 ```
 
 depuis le repertoire backnlp/  
 ```
-dbt image-nlp-azure .
+docker build -t image-nlp-azure .
 ```
 
-Push des images sur un regsitre de conteneur azure (ici apimeteonlp)
+depuis le repertoire frontend/  
+```
+docker build -t front-image .
+```
+```
+az login
+az acr login --name apimeteonlp
+```
+Push des images sur un registre de conteneur azure (ici nommé apimeteonlp)  
 ```
 docker tag paulinepostgres apimeteonlp.azurecr.io/paulinepostgres
 docker push apimeteonlp.azurecr.io/paulinepostgres
@@ -25,6 +33,8 @@ docker tag load-data-azure apimeteonlp.azurecr.io/pauline-load-data-azure
 docker push apimeteonlp.azurecr.io/pauline-load-data-azure
 docker tag image-nlp-azure apimeteonlp.azurecr.io/pauline-api-nlp-azure
 docker push apimeteonlp.azurecr.io/pauline-api-nlp-azure
+docker tag front-image apimeteonlp.azurecr.io/pauline-front-meteo-image-azure
+docker push apimeteonlp.azurecr.io/pauline-front-meteo-image-azure
 ```
 
 ## Prérequis:
